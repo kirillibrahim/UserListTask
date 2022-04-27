@@ -2,7 +2,7 @@ import API from "./Api";
 
 export const fetchUsersData = async () => {
   try {
-    let data = await API.get("https://disease.sh/v3/covid-19/vaccine");
+    let data = await API.get("userList.json");
     //console.log(data);
     if (data) {
       return data.data;

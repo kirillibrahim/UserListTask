@@ -1,27 +1,44 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import List from "./List";
-
-/**
- * Howdy, and welcome to the Alexis frontend code evaluation!
- *
- * To get started, fork this project (either click "Fork" in the
- * upper right or simply save a change).
- *
- * Please complete the following tasks:
- * - Fetch users and display their avatar and full name in a list
- * - Display your user in the upper right of the screen (avatar & name)
- * - Add an input where you can filter on user names
- * - Make sure your data is typed
- * - Style the UI at your own discretion ;)
- *
- * Endpoints
- * - List users: https://jonruna.github.io/tapi/userList.json
- * - Data about your user: https://jonruna.github.io/tapi/me.json
- *
- * When done, please send the fork link our way! 🎉
- */
+import { Users, User } from "./constants/Interfaces/UserListInterface";
+import { findCurUser } from "./utils/utils";
+import { fetchUsersData, fetchCurUser } from "./constants/APIs/UsersApi";
 
 export default function App() {
-  return <List />;
+  const [users, setUsers] = useState<Users | undefined>(undefined);
+  const [currUser, setCurrUser] = useState<User | undefined>(undefined);
+  useEffect(() => {
+    async function fetchInt() {
+      let promiseAll = await Promise.all([fetchUsersData(), fetchCurUser()]);
+      console.log(promiseAll);
+      // console.log(promiseAll[0].userList);
+      if (promiseAll && promiseAll.length > 0) {
+        setUsers(promiseAll[0].userList);
+        let myUser = findCurUser(promiseAll[1].userId, promiseAll[0].userList);
+
+        setCurrUser(myUser);
+        console.log(myUser);
+      }
+    }
+    fetchInt();
+    // eslint-disable-next-line
+  }, []);
+
+  return (
+    <div>
+      <div className="myuser">
+        <img
+          src={currUser?.avatar.url}
+          alt="profile-img"
+          className="list-item-image"
+        />
+        <span>
+          {" "}
+          {currUser?.name.first} {currUser?.name.last}
+        </span>
+      </div>
+      <List users={users} />
+    </div>
+  );
 }
