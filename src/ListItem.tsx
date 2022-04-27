@@ -4,7 +4,7 @@ import { User } from "./constants/Interfaces/UserListInterface";
 const ListItem: React.FC<User> = ({ user }) => {
   //console.log(user);
   return (
-    <div className="list-item">
+    <li className="list-item">
       <div className="list-item-image">
         <img src={user.avatar.url} alt="profile-img" />
       </div>
@@ -14,7 +14,7 @@ const ListItem: React.FC<User> = ({ user }) => {
         </h4>
         <p> {user.email} </p>
       </div>
-    </div>
+    </li>
   );
 };
 

@@ -1,4 +1,9 @@
 import { Users, User } from "../constants/Interfaces/UserListInterface";
+/**
+ *  I used binary search because time complexity is O(log n).
+ * Linear search is O(n)
+ */
+
 export const findCurUser = (
   id: string,
   customers: Users,

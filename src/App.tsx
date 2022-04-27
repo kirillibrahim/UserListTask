@@ -26,7 +26,7 @@ export default function App() {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <div className="myuser">
         <img
           src={currUser?.avatar.url}
@@ -34,7 +34,6 @@ export default function App() {
           className="list-item-image"
         />
         <span>
-          {" "}
           {currUser?.name.first} {currUser?.name.last}
         </span>
       </div>
